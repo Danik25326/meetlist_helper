@@ -1,0 +1,20 @@
+{
+  "name": "meet-attendance",
+  "version": "2.0.0",
+  "description": "Автоматична відвідуваність: MeetList → Google Sheets",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "7a": "node src/index.js --class 7A",
+    "7b": "node src/index.js --class 7B",
+    "7c": "node src/index.js --class 7C",
+    "7d": "node src/index.js --class 7D",
+    "all": "node src/index.js --all"
+  },
+  "dependencies": {
+    "axios": "^1.6.0",
+    "dotenv": "^16.3.1",
+    "googleapis": "^128.0.0",
+    "minimist": "^1.2.8"
+  }
+}
