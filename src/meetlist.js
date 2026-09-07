@@ -3,20 +3,21 @@ const axios = require("axios");
 const BASE = "https://api.meetlist.io/v1";
 
 /**
- * MeetList використовує Django REST Framework з JWT авторизацією.
- * Заголовок: Authorization: JWT <token>  (не Bearer!)
+ * MeetList використовує Django REST Framework.
+ * Токен тепер передається через Cookie (jwt_token).
  */
 function makeClient(jwt) {
   return axios.create({
     baseURL: BASE,
     headers: {
-      "Authorization": `JWT ${jwt}`,
+      "Cookie": `jwt_token=${jwt}`,
       "Accept": "application/json",
       "Content-Type": "application/json",
       "Origin": "https://meetlist.io",
       "Referer": "https://meetlist.io/",
       "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
     },
+    withCredentials: true
   });
 }
 
