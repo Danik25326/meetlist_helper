@@ -1,0 +1,49 @@
+name: Відвідуваність
+
+on:
+  # Запуск вручну з вибором класу
+  workflow_dispatch:
+    inputs:
+      class:
+        description: 'Клас (7A, 7B, 7C, 7D, або all)'
+        required: true
+        default: 'all'
+        type: choice
+        options:
+          - all
+          - 7A
+          - 7B
+          - 7C
+          - 7D
+
+jobs:
+  attendance:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Завантажити код
+        uses: actions/checkout@v4
+
+      - name: Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Встановити залежності
+        run: npm install
+
+      - name: Створити .env
+        run: echo "MEETLIST_JWT=${{ secrets.MEETLIST_JWT }}" > .env && echo "GOOGLE_SERVICE_ACCOUNT_PATH=./credentials/service-account.json" >> .env
+
+      - name: Створити credentials файл
+        run: |
+          mkdir -p credentials
+          echo '${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}' > credentials/service-account.json
+
+      - name: Запустити скрипт
+        run: |
+          if [ "${{ github.event.inputs.class }}" = "all" ]; then
+            node src/index.js --all
+          else
+            node src/index.js --class ${{ github.event.inputs.class }}
+          fi
