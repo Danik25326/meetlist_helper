@@ -43,7 +43,7 @@ jobs:
       - name: Запустити скрипт
         run: |
           if [ "${{ github.event.inputs.class }}" = "all" ]; then
-            node src/index.js --debug
+            node src/index.js --all
           else
-            node src/index.js --class ${{ github.event.inputs.class }} --debug
+            node src/index.js --class ${{ github.event.inputs.class }}
           fi
